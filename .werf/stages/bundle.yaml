@@ -28,3 +28,4 @@ git:
   - templates
   - Chart.yaml
   - modules.yaml
+  - values.yaml
