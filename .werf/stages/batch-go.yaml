@@ -1,0 +1,26 @@
+# Python deps image, required to download dependencies and put it to the final module image (bundle)
+# Image for building batch hooks with https://github.com/deckhouse/module-sdk support
+# Uncomment if you want to use it
+# ---  
+# image: batch-hooks  
+# from: golang:1.23-alpine  
+# final: false  
+# git:  
+#   - add: /  
+#     to: /usr/src/app  
+#     includePaths:  
+#       - hooks/batch  
+#     stageDependencies:  
+#       install:  
+#         - '**/go.mod'  
+#         - '**/go.sum'  
+#       beforeSetup:  
+#         - '**/*.go'  
+# shell:  
+#   install:  
+#     - cd /usr/src/app/hooks/batch  
+#     - go mod download  
+#   beforeSetup:  
+#     - |  
+#       cd /usr/src/app/hooks/batch;  
+#       CGO_ENABLED=0 go build -a -gcflags=all="-l -B" -ldflags="-w -s" -o /usr/local/bin/batchhooks *.go;

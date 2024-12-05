@@ -13,9 +13,17 @@ import:
   add: /lib/python/dist
   to: /lib/python/dist
   after: setup
+# Uncomment if you use batch hooks built with batch-go.yaml werf job
+# - image: batch-hooks  
+#   add: /usr/local/bin/batchhooks
+#   to: /hooks/batchhooks  
+#   after: setup  
 git:
 - add: /
   to: /
+  # Uncomment if you use batch-go.yaml werf job
+  # excludePaths:  
+  # - hooks/batch # exclude sources
   includePaths:
   - .helmignore
   - docs
