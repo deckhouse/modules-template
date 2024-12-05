@@ -23,4 +23,4 @@
 #   beforeSetup:  
 #     - |  
 #       cd /usr/src/app/hooks/batch;  
-#       CGO_ENABLED=0 go build -a -gcflags=all="-l -B" -ldflags="-w -s" -o /usr/local/bin/batchhooks *.go;
+#       CGO_ENABLED=0 go build -gcflags=all="-l -B" -ldflags="-w -s" -o /usr/local/bin/batchhooks *.go;
