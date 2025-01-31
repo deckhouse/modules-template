@@ -35,5 +35,5 @@ git:
   - openapi
   - templates
   - Chart.yaml
-  - modules.yaml
+  - module.yaml
   - values.yaml
