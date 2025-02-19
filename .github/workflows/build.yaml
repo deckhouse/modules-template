@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: deckhouse/modules-actions/setup@main
+      - uses: juev/modules-actions/setup@feature/dmt
         with:
           registry: ghcr.io
           registry_login: ${{ github.actor }}
@@ -22,7 +22,7 @@ jobs:
         id: repo_name
         run: echo "REPO_NAME=$(echo '${{ github.repository }}' | cut -d'/' -f2)" >> $GITHUB_OUTPUT
 
-      - uses: deckhouse/modules-actions/build@main
+      - uses: juev/modules-actions/setup@feature/dmt
         with:
           module_source: ghcr.io/${{ github.repository_owner }}/modules
           module_name: ${{ steps.repo_name.outputs.REPO_NAME }}
