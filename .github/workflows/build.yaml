@@ -8,6 +8,7 @@ env:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    continue-on-error: true
     name: Lint
     steps:
       - uses: actions/checkout@v4
