@@ -1,0 +1,8 @@
+# Base Images
+{{- $_ := set . "Images" (.Files.Get "base_images.yml" | fromYaml) }}
+{{- range $k, $v := .Images }}
+  {{ $baseImagePath := (printf "%s%s" $.Images.REGISTRY_PATH (trimSuffix "/" $v)) }}
+  {{- if ne $k "REGISTRY_PATH" }}
+    {{- $_ := set $.Images $k $baseImagePath }}
+  {{- end }}
+{{- end }}
