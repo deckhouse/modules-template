@@ -9,6 +9,7 @@
 image: {{ $ctx.ImageName }}
 context: images/{{ $ctx.ImageName }}
 dockerfile: Dockerfile
+staged: {{ env "STAGED_DOCKERFILE" "false" }}
     {{- end }}
   {{- /* For werf.inc.yaml render content by providing the ImageName param. */ -}}
   {{- else }}
