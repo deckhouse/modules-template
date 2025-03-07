@@ -5,10 +5,10 @@
 ---
   {{- /* For Dockerfile just render it from the folder. */ -}}
   {{- if not (regexMatch "/werf.inc.yaml$" $path) }}
-image: images/{{ $ctx.ImageName }}
+    {{- if not (hasKey $ImagesBuildFiles (printf "images/%s/werf.inc.yaml" $ctx.ImageName)) }}
 context: images/{{ $ctx.ImageName }}
 dockerfile: Dockerfile
-
+    {{- end }}
   {{- /* For werf.inc.yaml render content by providing the ImageName param. */ -}}
   {{- else }}
 {{ tpl $content $ctx }}
