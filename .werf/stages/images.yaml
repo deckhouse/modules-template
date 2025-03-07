@@ -10,10 +10,12 @@ image: {{ $ctx.ImageName }}
 context: images/{{ $ctx.ImageName }}
 dockerfile: Dockerfile
 staged: {{ env "STAGED_DOCKERFILE" "false" }}
+      {{- if (regexMatch "--mount=type=ssh" $content) }}
+ssh: default
+      {{- end }}
     {{- end }}
   {{- /* For werf.inc.yaml render content by providing the ImageName param. */ -}}
   {{- else }}
 {{ tpl $content $ctx }}
-
   {{- end }}
 {{- end }}
