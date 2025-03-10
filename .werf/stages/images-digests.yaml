@@ -1,6 +1,6 @@
 {{- /* Find all images digests and save use them to compose a structure for the module values. */ -}}
 {{- $ImagesIDList := list }}
-{{- $Images := tpl (.Files.Get ".werf/images.yaml") . }}
+{{- $Images := tpl (.Files.Get ".werf/stages/images.yaml") . }}
 
 {{- range $ImageManifest := regexSplit "\n?---[ \t]*\n" $Images -1 }}
   {{- $ImageManifest := $ImageManifest | fromYaml }}
