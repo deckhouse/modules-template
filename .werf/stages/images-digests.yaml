@@ -1,6 +1,6 @@
 {{- /* Find all images digests and save use them to compose a structure for the module values. */ -}}
 {{- $ImagesIDList := list }}
-{{- $Images := tpl (.Files.Get ".werf/stages/images.yaml") . }}
+{{- $Images := tpl (.Files.Get ".werf/images.yaml") . }}
 
 {{- range $ImageManifest := regexSplit "\n?---[ \t]*\n" $Images -1 }}
   {{- $ImageManifest := $ImageManifest | fromYaml }}
@@ -12,8 +12,10 @@
 {{- end }}
 
 # Images Digest: a files with all image digests to be able to use them in helm templates of a module
+# Version: module version
 ---
-image: images-digests
+image: images-digests-and-version
+final: false
 fromImage: builder/alpine
 dependencies:
 {{- range $ImageID := $ImagesIDList }}
@@ -39,3 +41,5 @@ shell:
           )
         )
       ' > /images_digests.json
+    - |
+      jq -n --arg version "{{ env "MODULES_MODULE_TAG" }}" '{"version": $version}' > /version.json
