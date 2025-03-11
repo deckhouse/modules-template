@@ -1,7 +1,7 @@
 # Python deps image, required to download dependencies and put it to the final module image (bundle)
 ---
 image: python-dependencies
-from: registry.deckhouse.io/base_images/alpine:3.16.3
+from: {{ .Images.BUILDER_ALPINE }}
 git:
   - add: /
     to: /
@@ -9,7 +9,7 @@ git:
       - lib/python
     stageDependencies:
       setup:
-        - lib/python/requirements.txt
+        - '**/*'
 shell:
   beforeInstall:
     - apk add --no-cache python3 py3-pip
