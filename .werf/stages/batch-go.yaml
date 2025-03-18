@@ -3,7 +3,7 @@
 # Uncomment if you want to use it
 # ---  
 # image: batch-hooks  
-# from: golang:1.23-bullseye  
+# from: {{ .Images.BUILDER_GOLANG_ALPINE }}
 # final: false  
 # git:  
 #   - add: /  

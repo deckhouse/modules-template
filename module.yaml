@@ -1,6 +1,6 @@
 name: echoserver
 stage: Sandbox
 weight: 960
-description: |
-  A simple echoserver for demo purposes.
+descriptions:
+  en: A simple echoserver for demo purposes.
 tags: ["demo"]
