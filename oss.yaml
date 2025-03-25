@@ -1,0 +1,5 @@
+- name: Echoserver
+  link: https://ealenn.github.io/Echo-Server/
+  description: An echoserver.
+  logo: https://ealenn.github.io/Echo-Server/assets/images/ping-pong.png
+  license: Apache License 2.0
