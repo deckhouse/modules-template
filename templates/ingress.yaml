@@ -8,8 +8,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
+  ingressClassName: {{ include "helm_lib_module_ingress_class" . | quote }}
   rules:
-  - http:
+  - host: {{ include "helm_lib_module_public_domain" (list . "echoserver") }}
+    http:
       paths:
       - path: /
         pathType: Prefix
@@ -18,3 +20,9 @@ spec:
             name: echoserver
             port:
               number: 80
+  {{- if (include "helm_lib_module_https_ingress_tls_enabled" .) }}
+  tls:
+    - hosts:
+        - {{ include "helm_lib_module_public_domain" (list . "echoserver") }}
+      secretName: {{ include "helm_lib_module_https_secret_name" (list . "ingress-tls") }}
+  {{- end }}
