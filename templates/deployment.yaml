@@ -1,3 +1,40 @@
+{{- if (.Values.global.enabledModules | has "vertical-pod-autoscaler") }}
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: echoserver
+  namespace: {{ .Chart.Name }}
+  {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: echoserver
+  updatePolicy:
+    updateMode: "Auto"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: "echoserver"
+        minAllowed:
+          cpu: 10m
+          memory: 10Mi
+        maxAllowed:
+          cpu: 50m
+          memory: 50Mi
+{{- end }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: echoserver
+  namespace: {{ .Chart.Name }}
+  {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: echoserver
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -6,6 +43,7 @@ metadata:
   namespace: {{ .Chart.Name }}
   {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
 spec:
+  revisionHistoryLimit: 2
   replicas: {{ .Values.echoserver.replicas }}
   selector:
     matchLabels:
@@ -15,12 +53,27 @@ spec:
       labels:
         app: echoserver
     spec:
+      priorityClassName: develop
       containers:
         - image: {{ include "helm_lib_module_image" (list . "echoserver") }}
           imagePullPolicy: IfNotPresent
           name: echoserver
           ports:
-            - containerPort: 80
+            - containerPort: 8080
+              name: http
           env:
             - name: PORT
-              value: "80"
+              value: "8080"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+          resources:
+            requests:
+              {{- include "helm_lib_module_ephemeral_storage_only_logs" . | nindent 14 }}
+          {{- include "helm_lib_module_container_security_context_run_as_user_deckhouse_pss_restricted" . | nindent 10 }}
+      {{- include "helm_lib_module_pod_security_context_run_as_user_deckhouse" . | nindent 6 }}

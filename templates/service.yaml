@@ -8,8 +8,9 @@ metadata:
 spec:
   ports:
     - port: 80
-      targetPort: 80
+      targetPort: http
       protocol: TCP
+      name: http
   type: ClusterIP
   selector:
     app: echoserver

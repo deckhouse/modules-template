@@ -1,8 +1,9 @@
+name: echoserver
 stage: Sandbox
 weight: 960
 subsystems:
   - chore
-namespace: demo
+namespace: echoserver
 descriptions:
   en: A simple echoserver for demo purposes.
 tags: ["demo"]
