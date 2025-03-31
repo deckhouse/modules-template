@@ -16,6 +16,8 @@ jobs:
         with:
           DMT_METRICS_URL: ${{ secrets.DMT_METRICS_URL }}
           DMT_METRICS_TOKEN: ${{ secrets.DMT_METRICS_TOKEN }}
+          DMT_METRICS_ID: "test-metrics"
+          DMT_REPOSITORY: "https://github.com/juev/modules-template-2"
 
   build:
     runs-on: ubuntu-latest
