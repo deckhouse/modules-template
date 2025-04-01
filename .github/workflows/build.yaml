@@ -6,6 +6,17 @@ env:
   CI_COMMIT_REF_NAME: ${{ github.ref_name }}
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    name: Lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: deckhouse/modules-actions/lint@main
+        env:
+          DMT_METRICS_URL: ${{ secrets.DMT_METRICS_URL }}
+          DMT_METRICS_TOKEN: ${{ secrets.DMT_METRICS_TOKEN }}
+
   build:
     runs-on: ubuntu-latest
     name: Build and Push images
