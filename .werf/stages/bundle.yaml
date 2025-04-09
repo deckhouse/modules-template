@@ -10,6 +10,7 @@ import:
   includePaths:
   - images_digests.json
   - version.json
+  after: setup
 # Rendering .werf/stages/python-deps.yaml is required! Comment out if not needed.
 - image: python-dependencies
   add: /lib/python/dist
