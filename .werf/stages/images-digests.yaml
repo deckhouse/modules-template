@@ -14,7 +14,7 @@
 # Images Digest: a files with all image digests to be able to use them in helm templates of a module
 ---
 image: images-digests
-from: {{ .Images.BUILDER_ALPINE }}
+fromImage: builder/alpine
 dependencies:
 {{- range $ImageID := $ImagesIDList }}
   {{- $ImageNameCamel  := $ImageID | splitList "/" | last  | camelcase | untitle }}

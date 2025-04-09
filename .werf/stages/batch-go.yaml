@@ -1,28 +1,28 @@
 # Python deps image, required to download dependencies and put it to the final module image (bundle)
 # Image for building batch hooks with https://github.com/deckhouse/module-sdk support
 # Uncomment if you want to use it
-# ---  
-# image: batch-hooks  
-# from: {{ .Images.BUILDER_GOLANG_ALPINE }}
-# final: false  
-# git:  
-#   - add: /  
-#     to: /usr/src/app  
-#     includePaths:  
-#       - hooks/batch  
-#     stageDependencies:  
-#       install:  
-#         - '**/go.mod'  
-#         - '**/go.sum'  
-#       beforeSetup:  
-#         - '**/*.go'  
-# shell:  
+# ---
+# image: batch-hooks
+# from: builder/golang-alpine
+# final: false
+# git:
+#   - add: /
+#     to: /usr/src/app
+#     includePaths:
+#       - hooks/batch
+#     stageDependencies:
+#       install:
+#         - '**/go.mod'
+#         - '**/go.sum'
+#       beforeSetup:
+#         - '**/*.go'
+# shell:
 #   install:
 #     # Build patch must contains the `hooks/` folder
-#     - cd /usr/src/app/hooks/batch  
-#     - go mod download  
-#   beforeSetup:  
-#     - |  
+#     - cd /usr/src/app/hooks/batch
+#     - go mod download
+#   beforeSetup:
+#     - |
 #       cd /usr/src/app/hooks/batch;
 #       # don't use `-trimpath` flag for building go hooks. Embedded binary path is necessary to properly identify a hook name
 #       CGO_ENABLED=0 go build -gcflags=all="-l -B" -ldflags="-w -s" -o /usr/local/bin/batchhooks *.go;

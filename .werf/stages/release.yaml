@@ -2,13 +2,13 @@
 ---
 image: release-channel-version-artifact
 final: false
-from: {{ .Images.BUILDER_ALPINE }}
+fromImage: builder/alpine
 shell:
   install:
     - echo -n '{"version":"{{ env "MODULES_MODULE_TAG" }}"}' > version.json
 ---
 image: release-channel-version
-from: {{ .Images.BUILDER_SCRATCH }}
+fromImage: builder/scratch
 import:
   - image: release-channel-version-artifact
     add: /
