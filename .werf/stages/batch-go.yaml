@@ -3,7 +3,7 @@
 # Uncomment if you want to use it
 # ---
 # image: batch-hooks
-# from: builder/golang-alpine
+# fromImage: builder/golang-alpine
 # final: false
 # git:
 #   - add: /
