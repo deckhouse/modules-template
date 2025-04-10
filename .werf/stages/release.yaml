@@ -1,18 +1,9 @@
 # Release image, stored in your.registry.io/modules/<module-name>/release:<semver>
 ---
-image: release-channel-version-artifact
-final: false
-from: {{ .Images.BUILDER_ALPINE }}
-shell:
-  install:
-    - echo -n '{"version":"{{ env "MODULES_MODULE_TAG" }}"}' > version.json
----
 image: release-channel-version
-from: {{ .Images.BUILDER_SCRATCH }}
+fromImage: builder/scratch
 import:
-  - image: release-channel-version-artifact
-    add: /
-    to: /
+  - image: images-digests-and-version
+    add: /version.json
+    to: /version.json
     after: install
-    includePaths:
-      - version.json

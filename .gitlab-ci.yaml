@@ -18,6 +18,7 @@ variables:
   MODULES_MODULE_SOURCE: registry.your-gitlab-address.com/path/to/your/repo
   MODULES_MODULE_TAG: ${CI_COMMIT_REF_NAME}
   WERF_VERSION: "2 stable"
+  BASE_IMAGES_VERSION: v0.4.1
 
 default:
   tags:

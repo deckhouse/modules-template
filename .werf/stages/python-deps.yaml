@@ -1,7 +1,7 @@
 # Python deps image, required to download dependencies and put it to the final module image (bundle)
 ---
 image: python-dependencies
-from: {{ .Images.BUILDER_ALPINE }}
+fromImage: builder/alpine
 final: false
 git:
   - add: /
@@ -10,7 +10,7 @@ git:
       - lib/python
     stageDependencies:
       setup:
-        - lib/python/requirements.txt
+        - '**/*'
 shell:
   beforeInstall:
     - apk add --no-cache python3 py3-pip

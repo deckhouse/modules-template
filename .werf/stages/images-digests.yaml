@@ -12,9 +12,11 @@
 {{- end }}
 
 # Images Digest: a files with all image digests to be able to use them in helm templates of a module
+# Version: module version
 ---
-image: images-digests
-from: {{ .Images.BUILDER_ALPINE }}
+image: images-digests-and-version
+final: false
+fromImage: builder/alpine
 dependencies:
 {{- range $ImageID := $ImagesIDList }}
   {{- $ImageNameCamel  := $ImageID | splitList "/" | last  | camelcase | untitle }}
@@ -39,3 +41,5 @@ shell:
           )
         )
       ' > /images_digests.json
+    - |
+      jq -n --arg version "{{ env "MODULES_MODULE_TAG" }}" '{"version": $version}' > /version.json
