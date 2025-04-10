@@ -4,9 +4,12 @@ image: bundle
 fromImage: builder/scratch
 import:
 # Rendering .werf/stages/images-digests.yaml is required! Comment out if not needed.
-- image: images-digests
-  add: /images_digests.json
-  to: /images_digests.json
+- image: images-digests-and-version
+  add: /
+  to: /
+  includePaths:
+  - images_digests.json
+  - version.json
   after: setup
 # Rendering .werf/stages/python-deps.yaml is required! Comment out if not needed.
 - image: python-dependencies
