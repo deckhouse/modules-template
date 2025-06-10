@@ -42,8 +42,8 @@ func Test_JQFilterApplyGolangVersion(t *testing.T) {
 		err = json.NewDecoder(bytes.NewBufferString(res.String())).Decode(golangVersion)
 		assert.NoError(t, err)
 
-		assert.Equal(t, "1", string(golangVersion.Major))
-		assert.Equal(t, "23", string(golangVersion.Minor))
-		assert.Equal(t, "8", string(golangVersion.Patch))
+		assert.Equal(t, 1, golangVersion.Major)
+		assert.Equal(t, 23, golangVersion.Minor)
+		assert.Equal(t, 8, golangVersion.Patch)
 	})
 }

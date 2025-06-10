@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"io"
 	"log/slog"
 	"net/http"
+	"strconv"
 
 	_ "hook/https"
 
@@ -25,9 +25,9 @@ var _ = registry.RegisterFunc(config, HandlerHook)
 // # Since we subscribed to ApiVersion example.io/v1, we get .spec.version (see jqFilter) as an
 // # object with fields 'major' and 'minor'.
 type VersionInfoMetadata struct {
-	Major json.Number `json:"major"`
-	Minor json.Number `json:"minor"`
-	Patch json.Number `json:"patch"`
+	Major int `json:"major"`
+	Minor int `json:"minor"`
+	Patch int `json:"patch"`
 }
 
 const ApplyNodeJQFilter = `.spec.version`
@@ -74,7 +74,10 @@ func HandlerHook(_ context.Context, input *pkg.HookInput) error {
 }
 
 func parse_snap_version(version VersionInfoMetadata) string {
-	return string(version.Major) + "." + string(version.Minor) + "." + string(version.Patch)
+	major := strconv.Itoa(version.Major)
+	minor := strconv.Itoa(version.Minor)
+	patch := strconv.Itoa(version.Patch)
+	return major + "." + minor + "." + patch
 }
 
 func ReadinessFunc(_ context.Context, input *pkg.HookInput) error {
