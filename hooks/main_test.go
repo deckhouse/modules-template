@@ -20,7 +20,7 @@ func Test_JQFilterApplyGolangVersion(t *testing.T) {
 	  "apiVersion": "example.io/v1",
 	  "kind": "Golang",
 	  "metadata": {
-		"name": "some-pytnon",
+		"name": "some-golang",
 		"namespace": "some-ns"
 	  },
 	  "spec": {
