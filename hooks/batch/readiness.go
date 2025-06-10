@@ -10,7 +10,7 @@ import (
 	"github.com/deckhouse/module-sdk/pkg"
 )
 
-func ReadinessFunc(_ context.Context, input *pkg.HookInput) error {
+func ReadinessFunc(ctx context.Context, input *pkg.HookInput) error {
 	input.Logger.Info("start user logic for readiness probe")
 
 	c := input.DC.GetHTTPClient()
