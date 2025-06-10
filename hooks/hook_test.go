@@ -45,6 +45,10 @@ func Test_JQFilterApplyCertificateSecret(t *testing.T) {
 		"name": "some-cert",
 		"namespace": "some-ns"
 	  },
+	  "spec": {
+	  "version": {
+	  }
+	  },
 	  "type": "kubernetes.io/tls"
 	}`
 
