@@ -102,19 +102,20 @@ func Test_JQFilterApplyCertificateSecret(t *testing.T) {
 		assert.Equal(t, "some-cert", auth.Name)
 	})
 
-	t.Run("apply python", func(t *testing.T) {
-		const rawPython = `
+	t.Run("apply golang", func(t *testing.T) {
+		const rawGolang = `
 		{
 	  "apiVersion": "example.io/v1",
-	  "kind": "Python",
+	  "kind": "Golang",
 	  "metadata": {
 		"name": "some-pytnon",
 		"namespace": "some-ns"
 	  },
 	  "spec": {
 		"version": {
-			"major":3,
-			"minor":12
+			"major":1,
+			"minor":23,
+			"patch":8
 		}
 	  }
 	}`
@@ -122,14 +123,15 @@ func Test_JQFilterApplyCertificateSecret(t *testing.T) {
 		q, err := jq.NewQuery(hook.ApplyNodeJQFilter)
 		assert.NoError(t, err)
 
-		res, err := q.FilterStringObject(context.Background(), rawPython)
+		res, err := q.FilterStringObject(context.Background(), rawGolang)
 		assert.NoError(t, err)
 
-		pythonVersion := new(hook.NodeInfoMetadata)
-		err = json.NewDecoder(bytes.NewBufferString(res.String())).Decode(pythonVersion)
+		golangVersion := new(hook.VersionInfoMetadata)
+		err = json.NewDecoder(bytes.NewBufferString(res.String())).Decode(golangVersion)
 		assert.NoError(t, err)
 
-		assert.Equal(t, "3", string(pythonVersion.Major))
-		assert.Equal(t, "12", string(pythonVersion.Minor))
+		assert.Equal(t, "1", string(golangVersion.Major))
+		assert.Equal(t, "23", string(golangVersion.Minor))
+		assert.Equal(t, "8", string(golangVersion.Patch))
 	})
 }

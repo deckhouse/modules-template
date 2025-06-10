@@ -28,33 +28,33 @@ import (
 )
 
 const (
-	SnapshotKey = "python_versions"
+	SnapshotKey = "golang_versions"
 )
 
 var _ = registry.RegisterFunc(config, HandlerHook)
 
 // # Since we subscribed to ApiVersion example.io/v1, we get .spec.version (see jqFilter) as an
 // # object with fields 'major' and 'minor'.
-// {"major":2,"minor":5}
-type NodeInfoMetadata struct {
+type VersionInfoMetadata struct {
 	Major json.Number `json:"major"`
 	Minor json.Number `json:"minor"`
+	Patch json.Number `json:"patch"`
 }
 
 const ApplyNodeJQFilter = `.spec.version`
 
-// # This hook subscribes to python.deckhouse.io/v1 CRs and puts their versions into ConfigMap
-// # 'python-versions'. The 'jqFilter' expression lets us focus only on meaningful parts of resources.
-// # The result of this filter will be in snapshots array named 'python_versions'. Snapshots are in
+// # This hook subscribes to golang.deckhouse.io/v1 CRs and puts their versions into ConfigMap
+// # 'golang-versions'. The 'jqFilter' expression lets us focus only on meaningful parts of resources.
+// # The result of this filter will be in snapshots array named 'golang_versions'. Snapshots are in
 // # sync with cluster state, because by default 'kubeternetes' subscription uses all kinds of events.
 // #
 // # Refer to Shell Operator doc for details https://github.com/flant/shell-operator/blob/main/HOOKS.md
 var config = &pkg.HookConfig{
 	Kubernetes: []pkg.KubernetesConfig{
 		{
-			Name:       "python_versions",
+			Name:       "golang_versions",
 			APIVersion: "example.io/v1",
-			Kind:       "Python",
+			Kind:       "Golang",
 			JqFilter:   ApplyNodeJQFilter,
 		},
 	},
@@ -63,30 +63,29 @@ var config = &pkg.HookConfig{
 func HandlerHook(_ context.Context, input *pkg.HookInput) error {
 	// # From the hook run context we get the snapshots as we named it in the suscription. It will
 	// # always be a list if it is defined in the hook config. 'versions' here contain objects of the form
-	// #   [ {'major': 3, 'minor': 8} , ... ]
-	// # The version dict is the result of jqFilter '.spec.version', see crds/python.yaml into version v1.
-	pythonVersions, err := objectpatch.UnmarshalToStruct[NodeInfoMetadata](input.Snapshots, "python_versions")
+	// # The version dict is the result of jqFilter '.spec.version', see crds/golang.yaml into version v1.
+	golangVersions, err := objectpatch.UnmarshalToStruct[VersionInfoMetadata](input.Snapshots, "golang_versions")
 	if err != nil {
 		return err
 	}
 
-	input.Logger.Info("found python_versions", slog.Any("pythonVersions", pythonVersions))
+	input.Logger.Info("found golang_versions", slog.Any("golangVersions", golangVersions))
 
-	versions := make([]string, 0, len(pythonVersions))
-	for _, version := range pythonVersions {
+	versions := make([]string, 0, len(golangVersions))
+	for _, version := range golangVersions {
 		versions = append(versions, parse_snap_version(version))
 	}
 
 	// # IMPORTANT: We assume that this module will be named 'echo-server' when added to Deckhouse. The
 	// # name of the module is used in the values reference. For now, module name in deckhouse and
 	// # values reference are tightly coupled.
-	input.Values.Set("echoserver.internal.pythonVersions", versions)
+	input.Values.Set("echoserver.internal.golangVersions", versions)
 
 	return nil
 }
 
-func parse_snap_version(version NodeInfoMetadata) string {
-	return string(version.Major) + "." + string(version.Minor)
+func parse_snap_version(version VersionInfoMetadata) string {
+	return string(version.Major) + "." + string(version.Minor) + "." + string(version.Patch)
 }
 
 func main() {
