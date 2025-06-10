@@ -35,8 +35,6 @@ var _ = registry.RegisterFunc(config, HandlerHook)
 
 // # Since we subscribed to ApiVersion example.io/v1, we get .spec.version (see jqFilter) as an
 // # object with fields 'major' and 'minor'.
-// v = snap["filterResult"]
-// major, minor = v["major"], v["minor"]
 // {"major":2,"minor":5}
 type NodeInfoMetadata struct {
 	Major json.Number `json:"major"`
@@ -47,7 +45,7 @@ const ApplyNodeJQFilter = `.spec.version`
 
 // # This hook subscribes to python.deckhouse.io/v1 CRs and puts their versions into ConfigMap
 // # 'python-versions'. The 'jqFilter' expression lets us focus only on meaningful parts of resources.
-// # The result of this filter will be in snapshots arral named 'python_versions'. Snapshots are in
+// # The result of this filter will be in snapshots array named 'python_versions'. Snapshots are in
 // # sync with cluster state, because by default 'kubeternetes' subscription uses all kinds of events.
 // #
 // # Refer to Shell Operator doc for details https://github.com/flant/shell-operator/blob/main/HOOKS.md
@@ -57,21 +55,7 @@ var config = &pkg.HookConfig{
 			Name:       "python_versions",
 			APIVersion: "example.io/v1",
 			Kind:       "Python",
-			// NamespaceSelector: &pkg.NamespaceSelector{
-			// 	NameSelector: &pkg.NameSelector{
-			// 		MatchNames: []string{"d8-system"},
-			// 	},
-			// },
-			// LabelSelector: &v1.LabelSelector{
-			// 	MatchExpressions: []v1.LabelSelectorRequirement{
-			// 		v1.LabelSelectorRequirement{
-			// 			Key:      "owner",
-			// 			Operator: v1.LabelSelectorOpNotIn,
-			// 			Values:   []string{"helm"},
-			// 		},
-			// 	},
-			// },
-			JqFilter: ApplyNodeJQFilter,
+			JqFilter:   ApplyNodeJQFilter,
 		},
 	},
 }
@@ -79,7 +63,7 @@ var config = &pkg.HookConfig{
 func HandlerHook(_ context.Context, input *pkg.HookInput) error {
 	// # From the hook run context we get the snapshots as we named it in the suscription. It will
 	// # always be a list if it is defined in the hook config. 'versions' here contain objects of the form
-	// #   [ {'filterResult': {'major': 3, 'minor': 8}} , ... ]
+	// #   [ {'major': 3, 'minor': 8} , ... ]
 	// # The version dict is the result of jqFilter '.spec.version', see crds/python.yaml into version v1.
 	pythonVersions, err := objectpatch.UnmarshalToStruct[NodeInfoMetadata](input.Snapshots, "python_versions")
 	if err != nil {
@@ -101,8 +85,6 @@ func HandlerHook(_ context.Context, input *pkg.HookInput) error {
 	return nil
 }
 
-// # Since we subscribed to ApiVersion example.io/v1, we get .spec.version (see jqFilter) as an
-// # object with fields 'major' and 'minor'.
 func parse_snap_version(version NodeInfoMetadata) string {
 	return string(version.Major) + "." + string(version.Minor)
 }
