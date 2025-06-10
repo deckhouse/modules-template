@@ -24,6 +24,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	hook "hook"
+
 	copycustomcertificate "github.com/deckhouse/module-sdk/common-hooks/copy-custom-certificate"
 	tlscertificate "github.com/deckhouse/module-sdk/common-hooks/tls-certificate"
 	"github.com/deckhouse/module-sdk/pkg/certificate"
@@ -98,5 +100,36 @@ func Test_JQFilterApplyCertificateSecret(t *testing.T) {
 		assert.Equal(t, "some-key", string(auth.Key))
 		assert.Equal(t, "some-crt", string(auth.Cert))
 		assert.Equal(t, "some-cert", auth.Name)
+	})
+
+	t.Run("apply python", func(t *testing.T) {
+		const rawPython = `
+		{
+	  "apiVersion": "example.io/v1",
+	  "kind": "Python",
+	  "metadata": {
+		"name": "some-pytnon",
+		"namespace": "some-ns"
+	  },
+	  "spec": {
+		"version": {
+			"major":3,
+			"minor":12
+		}
+	  }
+	}`
+
+		q, err := jq.NewQuery(hook.ApplyNodeJQFilter)
+		assert.NoError(t, err)
+
+		res, err := q.FilterStringObject(context.Background(), rawPython)
+		assert.NoError(t, err)
+
+		pythonVersion := new(hook.NodeInfoMetadata)
+		err = json.NewDecoder(bytes.NewBufferString(res.String())).Decode(pythonVersion)
+		assert.NoError(t, err)
+
+		assert.Equal(t, "3", string(pythonVersion.Major))
+		assert.Equal(t, "12", string(pythonVersion.Minor))
 	})
 }

@@ -16,6 +16,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"log/slog"
 
 	_ "hook/https"
@@ -27,7 +28,7 @@ import (
 )
 
 const (
-	SnapshotKey = "custom_certificates"
+	SnapshotKey = "python_versions"
 )
 
 var _ = registry.RegisterFunc(config, HandlerHook)
@@ -38,8 +39,8 @@ var _ = registry.RegisterFunc(config, HandlerHook)
 // major, minor = v["major"], v["minor"]
 // {"major":2,"minor":5}
 type NodeInfoMetadata struct {
-	Major string `json:"major"`
-	Minor string `json:"minor"`
+	Major json.Number `json:"major"`
+	Minor json.Number `json:"minor"`
 }
 
 const ApplyNodeJQFilter = `.spec.version`
@@ -103,7 +104,7 @@ func HandlerHook(_ context.Context, input *pkg.HookInput) error {
 // # Since we subscribed to ApiVersion example.io/v1, we get .spec.version (see jqFilter) as an
 // # object with fields 'major' and 'minor'.
 func parse_snap_version(version NodeInfoMetadata) string {
-	return version.Major + "." + version.Minor
+	return string(version.Major) + "." + string(version.Minor)
 }
 
 func main() {
