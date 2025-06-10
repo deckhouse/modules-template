@@ -85,7 +85,7 @@ func ReadinessFunc(_ context.Context, input *pkg.HookInput) error {
 
 	c := input.DC.GetHTTPClient()
 
-	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1/", nil)
+	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1/readyz", nil)
 	if err != nil {
 		return fmt.Errorf("create request: %w", err)
 	}
