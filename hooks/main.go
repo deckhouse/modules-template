@@ -48,7 +48,7 @@ const ApplyNodeJQFilter = `.spec.version`
 // # The result of this filter will be in snapshots array named 'golang_versions'. Snapshots are in
 // # sync with cluster state, because by default 'kubeternetes' subscription uses all kinds of events.
 // #
-// # Refer to Shell Operator doc for details https://github.com/flant/shell-operator/blob/main/HOOKS.md
+// # Refer to Shell Operator doc for details https://flant.github.io/shell-operator/HOOKS.html
 var config = &pkg.HookConfig{
 	Kubernetes: []pkg.KubernetesConfig{
 		{
