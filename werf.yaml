@@ -12,8 +12,6 @@ build:
 {{ tpl (.Files.Get ".werf/stages/base-images.yaml") $ }}
 {{ tpl (.Files.Get ".werf/stages/images.yaml") $ }}
 {{ tpl (.Files.Get ".werf/stages/images-digests.yaml") $ }}
-{{ tpl (.Files.Get ".werf/stages/python-deps.yaml") $ }}
-# Uncomment if you use batch go hooks
-# {{ tpl (.Files.Get ".werf/stages/batch-go.yaml") $ }}
+{{ tpl (.Files.Get ".werf/stages/batch-go.yaml") $ }}
 {{ tpl (.Files.Get ".werf/stages/bundle.yaml") $ }}
 {{ tpl (.Files.Get ".werf/stages/release.yaml") $ }}

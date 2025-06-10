@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: python-versions
+  name: golang-versions
   namespace: {{ .Chart.Name }}
   {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
 data:
-  pythonVersions: {{ .Values.echoserver.internal.pythonVersions | toJson | quote }}
+  golangVersions: {{ .Values.echoserver.internal.golangVersions | toJson | quote }}

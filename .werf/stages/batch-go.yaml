@@ -1,6 +1,5 @@
-# Python deps image, required to download dependencies and put it to the final module image (bundle)
+# Golang deps image, required to download dependencies and put it to the final module image (bundle)
 # Image for building batch hooks with https://github.com/deckhouse/module-sdk support
-# Uncomment if you want to use it
 ---
 image: batch-hooks
 fromImage: builder/golang-alpine
