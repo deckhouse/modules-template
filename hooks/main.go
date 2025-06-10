@@ -52,7 +52,7 @@ var config = &pkg.HookConfig{
 func HandlerHook(_ context.Context, input *pkg.HookInput) error {
 	// # From the hook run context we get the snapshots as we named it in the suscription. It will
 	// # always be a list if it is defined in the hook config. 'versions' here contain objects of the form
-	// # The version dict is the result of jqFilter '.spec.version', see crds/golang.yaml into version v1.
+	// # The slice of VersionInfoMetadata is the result of jqFilter '.spec.version', see crds/golang.yaml into version v1.
 	golangVersions, err := objectpatch.UnmarshalToStruct[VersionInfoMetadata](input.Snapshots, "golang_versions")
 	if err != nil {
 		return err
