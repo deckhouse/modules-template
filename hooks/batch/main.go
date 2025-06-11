@@ -19,8 +19,8 @@ const (
 
 var _ = registry.RegisterFunc(config, HandlerHook)
 
-// # Since we subscribed to ApiVersion example.io/v1, we get .spec.version (see jqFilter) as an
-// # object with fields 'major' and 'minor'.
+// Since we subscribed to ApiVersion example.io/v1, we get .spec.version (see jqFilter) as an
+// object with fields 'major' and 'minor'.
 type VersionInfoMetadata struct {
 	Major int `json:"major"`
 	Minor int `json:"minor"`
@@ -29,12 +29,12 @@ type VersionInfoMetadata struct {
 
 const ApplyNodeJQFilter = `.spec.version`
 
-// # This hook subscribes to golang.deckhouse.io/v1 CRs and puts their versions into ConfigMap
-// # 'golang-versions'. The 'jqFilter' expression lets us focus only on meaningful parts of resources.
-// # The result of this filter will be in snapshots array named 'golang_versions'. Snapshots are in
-// # sync with cluster state, because by default 'kubeternetes' subscription uses all kinds of events.
+// This hook subscribes to golang.deckhouse.io/v1 CRs and puts their versions into ConfigMap
+// 'golang-versions'. The 'jqFilter' expression lets us focus only on meaningful parts of resources.
+// The result of this filter will be in snapshots array named 'golang_versions'. Snapshots are in
+// sync with cluster state, because by default 'kubeternetes' subscription uses all kinds of events.
 // #
-// # Refer to Shell Operator doc for details https://flant.github.io/shell-operator/HOOKS.html
+// Refer to Shell Operator doc for details https://flant.github.io/shell-operator/HOOKS.html
 var config = &pkg.HookConfig{
 	Kubernetes: []pkg.KubernetesConfig{
 		{
@@ -47,9 +47,9 @@ var config = &pkg.HookConfig{
 }
 
 func HandlerHook(_ context.Context, input *pkg.HookInput) error {
-	// # From the hook run context we get the snapshots as we named it in the suscription. It will
-	// # always be a list if it is defined in the hook config. 'versions' here contain objects of the form
-	// # The slice of VersionInfoMetadata is the result of jqFilter '.spec.version', see crds/golang.yaml into version v1.
+	// From the hook run context we get the snapshots as we named it in the suscription. It will
+	// always be a list if it is defined in the hook config. 'versions' here contain objects of the form
+	// The slice of VersionInfoMetadata is the result of jqFilter '.spec.version', see crds/golang.yaml into version v1.
 	golangVersions, err := objectpatch.UnmarshalToStruct[VersionInfoMetadata](input.Snapshots, "golang_versions")
 	if err != nil {
 		return err
@@ -62,9 +62,9 @@ func HandlerHook(_ context.Context, input *pkg.HookInput) error {
 		versions = append(versions, parse_snap_version(version))
 	}
 
-	// # IMPORTANT: We assume that this module will be named 'echo-server' when added to Deckhouse. The
-	// # name of the module is used in the values reference. For now, module name in deckhouse and
-	// # values reference are tightly coupled.
+	// IMPORTANT: We assume that this module will be named 'echo-server' when added to Deckhouse. The
+	// name of the module is used in the values reference. For now, module name in deckhouse and
+	// values reference are tightly coupled.
 	input.Values.Set("echoserver.internal.golangVersions", versions)
 
 	return nil
