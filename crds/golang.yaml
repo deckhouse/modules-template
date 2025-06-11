@@ -1,16 +1,16 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: pythons.example.io
+  name: golangs.example.io
   labels:
     module: my-module
 spec:
   group: example.io
   scope: Cluster
   names:
-    plural: pythons
-    singular: python
-    kind: Python
+    plural: golangs
+    singular: golang
+    kind: Golang
   preserveUnknownFields: false
   versions:
     - name: v1
@@ -19,36 +19,42 @@ spec:
       schema:
         openAPIV3Schema:
           type: object
-          description: Python Interpreter.
+          description: Go Compiler.
           required:
             - spec
           properties:
             spec:
               type: object
-              description: Spec of Python Interpreter.
+              description: Spec of Go Compiler.
               required:
                 - version
               properties:
                 version:
                   type: object
-                  description: Python version.
+                  description: Golang version.
                   required:
                     - major
                     - minor
+                    - patch
                   properties:
                     major:
                       type: integer
-                      description: Major version of Python.
-                      default: 3
+                      description: Major version of Golang.
+                      default: 1
                       enum:
-                        - 2
-                        - 3
+                        - 1
                     minor:
                       type: integer
-                      description: Minor version of Python.
+                      description: Minor version of Golang.
                       minimum: 0
-                      maximum: 12
-                      default: 11
+                      maximum: 24
+                      default: 24
+                    patch:
+                      type: integer
+                      description: Patch version of Golang.
+                      default: 0
+                      minimum: 0
+                      maximum: 17
                 modules:
                   type: array
                   description: A list of modules to install.
