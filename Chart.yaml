@@ -1,0 +1,6 @@
+name: echoserver
+version: 0.0.1
+dependencies:
+  - name: deckhouse_lib_helm
+    version: 1.44.5
+    repository: https://deckhouse.github.io/lib-helm
