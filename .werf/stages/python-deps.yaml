@@ -1,0 +1,10 @@
+# Python deps image, required to download dependencies and put it to the final module image (bundle)
+---
+image: python-dependencies
+fromImage: base/python
+git:
+  - add: /lib/python
+    to: /lib/python
+shell:
+  setup:
+    - /usr/bin/python3 -m pip install -r /lib/python/requirements.txt -t /lib/python/dist
