@@ -3,7 +3,7 @@ module hook
 go 1.23.8
 
 require (
-	github.com/deckhouse/module-sdk v0.2.3-0.20250603103904-890ac578abfb
+	github.com/deckhouse/module-sdk v0.3.2
 	github.com/stretchr/testify v1.10.0
 )
 
@@ -62,10 +62,10 @@ require (
 	github.com/prometheus/common v0.48.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
-	github.com/spf13/cobra v1.8.1 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/spf13/cobra v1.9.1 // indirect
+	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/sylabs/oci-tools v0.7.0 // indirect
-	github.com/tidwall/gjson v1.14.4 // indirect
+	github.com/tidwall/gjson v1.18.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/vbatts/tar-split v0.11.3 // indirect
