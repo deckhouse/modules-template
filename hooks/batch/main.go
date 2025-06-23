@@ -79,7 +79,6 @@ func parse_snap_version(version VersionInfoMetadata) string {
 
 func main() {
 	readinessConfig := &app.ReadinessConfig{
-		ModuleName:        "echo-server",
 		IntervalInSeconds: 12,
 		ProbeFunc:         ReadinessFunc,
 	}
