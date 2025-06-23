@@ -1,6 +1,8 @@
 name: echoserver
 stage: Sandbox
 weight: 960
+requirements:
+    deckhouse: ">= 1.69"
 subsystems:
   - chore
 namespace: echoserver

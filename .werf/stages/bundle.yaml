@@ -3,24 +3,34 @@
 image: bundle
 fromImage: builder/scratch
 import:
-  - image: images-digests-and-version
-    add: /images_digests.json
-    to: /images_digests.json
-    after: setup
-  - image: python-dependencies
-    add: /usr/bin
-    to: /hooks/venv/
-    before: setup
-  - image: python-dependencies
-    add: /lib/python/dist
-    to: /lib/python/dist
-    before: setup
+# Enrich image digest and version
+# Rendering .werf/stages/images-digests.yaml is required! 
+- image: images-digests-and-version
+  add: /
+  to: /
+  includePaths:
+  - images_digests.json
+  - version.json
+  after: setup
+# batch hooks built with batch-go.yaml werf job
+- image: batch-hooks
+  add: /usr/local/bin/batchhooks
+  to: /hooks/batchhooks
+  after: setup
+# Uncomment if you use python hooks
+# - image: python-dependencies
+#   add: /usr/bin
+#   to: /hooks/venv/
+#   before: setup
+# - image: python-dependencies
+#   add: /lib/python/dist
+#   to: /lib/python/dist
+#   before: setup
 git:
 - add: /
   to: /
-  # Uncomment if you use batch-go.yaml werf job
-  # excludePaths:
-  # - hooks/batch # exclude sources
+  excludePaths:
+  - hooks/batch # exclude sources
   includePaths:
   - .helmignore
   - docs
