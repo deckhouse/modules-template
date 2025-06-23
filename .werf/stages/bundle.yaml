@@ -3,7 +3,8 @@
 image: bundle
 fromImage: builder/scratch
 import:
-# Rendering .werf/stages/images-digests.yaml is required! Comment out if not needed.
+# Enrich image digest and version
+# Rendering .werf/stages/images-digests.yaml is required! 
 - image: images-digests-and-version
   add: /
   to: /
@@ -11,16 +12,12 @@ import:
   - images_digests.json
   - version.json
   after: setup
-# Uncomment if you use batch hooks built with batch-go.yaml werf job
+# batch hooks built with batch-go.yaml werf job
 - image: batch-hooks
   add: /usr/local/bin/batchhooks
   to: /hooks/batchhooks
   after: setup
 # Uncomment if you use python hooks
-# - image: images-digests-and-version
-#   add: /images_digests.json
-#   to: /images_digests.json
-#   after: setup
 # - image: python-dependencies
 #   add: /usr/bin
 #   to: /hooks/venv/
