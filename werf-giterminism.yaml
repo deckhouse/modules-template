@@ -4,5 +4,6 @@ config:
     allowEnvVariables:
     - /CI_.+/
     - MODULES_MODULE_TAG
+    - STAGED_DOCKERFILE   # Allow the use of these variable in the .werf/stages/images.yaml file
     allowUncommittedFiles:
     - "base_images.yml"
