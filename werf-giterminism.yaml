@@ -4,5 +4,6 @@ config:
     allowEnvVariables:
     - /CI_.+/
     - MODULES_MODULE_TAG
+    - STAGED_DOCKERFILE
     allowUncommittedFiles:
     - "base_images.yml"
