@@ -1,6 +1,7 @@
 name: echoserver
-stage: Preview
+stage: Sandbox
 weight: 960
+# constraints to check module requirements
 requirements:
     deckhouse: ">= 1.69"
 subsystems:
@@ -9,3 +10,16 @@ namespace: echoserver
 descriptions:
   en: A simple echoserver for demo purposes.
 tags: ["demo"]
+disable:
+  # if you want to warn users about potential disruptions when disabling the module
+  # set confirmation to true and fix message below
+  confirmation: false
+  message: "Disabling of this module can cause disruptions in the cluster functionality."
+accessibility:
+  editions:
+    # this module has default behavior
+    _default:
+      # it is not available (deckhouse will ignore it)
+      available: false
+      # it is not enabled in any bundle (auto startup like deckhouse embedded modules)
+      enabledInBundles: []
