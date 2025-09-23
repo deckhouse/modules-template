@@ -1,5 +1,5 @@
 name: echoserver
-stage: Sandbox
+stage: Experimental
 weight: 960
 # constraints to check module requirements
 requirements:
