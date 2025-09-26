@@ -1,5 +1,5 @@
 configVersion: 1
-project: installer
+project: echoserver
 cleanup:
   keepPolicies:
   - references:
