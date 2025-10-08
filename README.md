@@ -19,6 +19,6 @@ These instructions will help you set up and modify the module template for your 
 Before you begin, ensure you have met the following requirements:
 - [Deckhouse Platform](https://github.com/deckhouse/deckhouse) installed and running on your Kubernetes cluster.
 - Basic knowledge of Kubernetes and Helm charts.
-- Reading the doc about (how to create your own module](https://deckhouse.io/products/kubernetes-platform/documentation/v1/module-development/).
+- Reading the doc about [how to create your own module](https://deckhouse.io/products/kubernetes-platform/documentation/v1/architecture/module-development/).
 
 
