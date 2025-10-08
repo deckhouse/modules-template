@@ -2,6 +2,7 @@
 
 {{- range $path, $content := $ImagesBuildFiles  }}
   {{ $ctx := (dict "ImageName" ($path | split "/")._1) }}
+  {{- $_ := set $ctx "Files" $.Files }} 
 ---
   {{- /* For Dockerfile just render it from the folder. */ -}}
   {{- if not (regexMatch "/werf.inc.yaml$" $path) }}
