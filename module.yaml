@@ -22,4 +22,5 @@ accessibility:
       # it is not available (deckhouse will ignore it)
       available: false
       # it is not enabled in any bundle (auto startup like deckhouse embedded modules)
-      enabledInBundles: []
+      enabledInBundles: 
+        - Minimal
