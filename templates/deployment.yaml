@@ -55,7 +55,7 @@ spec:
     spec:
       priorityClassName: develop
       containers:
-        - image: {{ include "helm_lib_module_image" (list . "echoserver") }}
+        - image: {{ include "helm_lib_module_image" (list . "echoServer") }} # must be equal to the image name (f.e. images/echoServer/)
           imagePullPolicy: IfNotPresent
           name: echoserver
           ports:
@@ -76,4 +76,5 @@ spec:
             requests:
               {{- include "helm_lib_module_ephemeral_storage_only_logs" . | nindent 14 }}
           {{- include "helm_lib_module_container_security_context_run_as_user_deckhouse_pss_restricted" . | nindent 10 }}
+          {{- "readOnlyRootFilesystem: true" | nindent 12 }}
       {{- include "helm_lib_module_pod_security_context_run_as_user_deckhouse" . | nindent 6 }}
