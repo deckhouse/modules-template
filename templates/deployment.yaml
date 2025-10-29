@@ -55,7 +55,7 @@ spec:
     spec:
       priorityClassName: develop
       containers:
-        - image: {{ include "helm_lib_module_image" (list . "echoserver") }}
+        - image: {{ include "helm_lib_module_image" (list . "echoServer") }} # must be equal to the image name (f.e. images/echoServer/)
           imagePullPolicy: IfNotPresent
           name: echoserver
           ports:
