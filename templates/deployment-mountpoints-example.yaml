@@ -1,0 +1,38 @@
+{{- /*
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mpexample
+  namespace: {{ .Chart.Name }}
+  {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
+spec:
+  revisionHistoryLimit: 2
+  replicas: {{ .Values.echoserver.replicas }}
+  selector:
+    matchLabels:
+      app: mpexample
+  template:
+    metadata:
+      labels:
+        app: mpexample
+    spec:
+      priorityClassName: develop
+      containers:
+        - image: {{ include "helm_lib_module_image" (list . "mpexample") }}
+          imagePullPolicy: IfNotPresent
+          name: echoserver
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: PORT
+              value: "8080"
+          volumeMounts:
+            - name: example
+              mountPath: /mount-dir-example
+      volumes:
+        - name: example
+          emptyDir:
+            sizeLimit: 50Mi
+*/ -}}

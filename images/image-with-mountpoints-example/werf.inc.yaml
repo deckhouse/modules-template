@@ -1,0 +1,8 @@
+{{ /*
+---
+image: mpexample
+from: ealen/echo-server:0.7.0
+git:
+{{- include "image mount points" . }}
+
+/* }}
