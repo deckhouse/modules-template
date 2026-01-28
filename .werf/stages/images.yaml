@@ -1,21 +1,16 @@
+{{- $Root := . }}
 {{- $ImagesBuildFiles := .Files.Glob "images/*/{Dockerfile,werf.inc.yaml}" }}
 
 {{- range $path, $content := $ImagesBuildFiles  }}
-  {{ $ctx := (dict "ImageName" ($path | split "/")._1) }}
+{{- $ctx := dict }}
+  {{- $_ := set $ctx "ImageName" ($path | split "/")._1 }}
+  {{- $_ := set $ctx "ModuleName" "module-template" }}
+  {{- $_ := set $ctx "ImagePath" (printf "/images/%s" $ctx.ImageName) }} 
+  {{- $_ := set $ctx "ModuleDir" "/" }}
+  {{- $_ := set $ctx "ProjectName" (list $ctx.ModuleName $ctx.ImageName | join "/") }}
+  {{- $_ := set $ctx "Commit" $Root.Commit }}  
+
 ---
-  {{- /* For Dockerfile just render it from the folder. */ -}}
-  {{- if not (regexMatch "/werf.inc.yaml$" $path) }}
-    {{- if not (hasKey $ImagesBuildFiles (printf "images/%s/werf.inc.yaml" $ctx.ImageName)) }}
-image: {{ $ctx.ImageName }}
-context: images/{{ $ctx.ImageName }}
-dockerfile: Dockerfile
-staged: {{ env "STAGED_DOCKERFILE" "false" }}
-      {{- if (regexMatch "--mount=type=ssh" $content) }}
-ssh: default
-      {{- end }}
-    {{- end }}
-  {{- /* For werf.inc.yaml render content by providing the ImageName param. */ -}}
-  {{- else }}
+{{- $_ := set $ctx "Files" $Root.Files }}
 {{ tpl $content $ctx }}
-  {{- end }}
 {{- end }}
