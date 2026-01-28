@@ -3,3 +3,5 @@
   description: An echoserver.
   logo: https://ealenn.github.io/Echo-Server/assets/images/ping-pong.png
   license: Apache License 2.0
+  id: echoserver
+  version: 0.7.0
