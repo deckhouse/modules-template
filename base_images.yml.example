@@ -1,0 +1,7 @@
+# REGISTRY_PATH is a special key which is concatenated with other base images
+REGISTRY_PATH: registry.organization.ru/base_images
+tools/yq: "sha256:example"
+tools/jq: "sha256:example"
+builder/golang-alpine: "sha256:example"
+builder/alpine: "sha256:example"
+builder/scratch: "sha256:example"

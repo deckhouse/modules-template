@@ -1,0 +1,3 @@
+{{- $version :=  include "get_oss_version_by_id" (list "echoserver" .)  }} 
+image: {{ $.ModuleName }}/{{ $.ImageName }}
+fromImage: ealen/echo-server:{{ $version }}
