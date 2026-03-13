@@ -7,3 +7,9 @@ import:
     add: /version.json
     to: /version.json
     after: install
+git:
+  - add: /
+    to: /
+    includePaths:
+      - module.yaml
+    after: install
