@@ -12,4 +12,3 @@ git:
     to: /
     includePaths:
       - module.yaml
-    after: install
