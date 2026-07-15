@@ -1,0 +1,49 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: golangs.example.io
+  labels:
+    module: my-module
+spec:
+  group: example.io
+  scope: Cluster
+  names:
+    plural: golangs
+    singular: golang
+    kind: Golang
+  versions:
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          type: object
+          description: Компилятор Go.
+          properties:
+            spec:
+              type: object
+              description: Спецификация компилятора Go.
+              properties:
+                version:
+                  type: object
+                  description: Версия Golang.
+                  properties:
+                    major:
+                      description: Основная версия Golang.
+                    minor:
+                      description: Минорная версия Golang.
+                    patch:
+                      description: Патч-версия Golang.
+                modules:
+                  type: array
+                  description: Список модулей для установки.
+                  items:
+                    type: object
+                    description: Модуль для установки.
+                    properties:
+                      name:
+                        description: Имя модуля.
+                      version:
+                        description: Версия модуля.
+                      source:
+                        description: Источник модуля.
+                      extraArgs:
+                        description: Дополнительные аргументы для pip install.

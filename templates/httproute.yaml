@@ -1,0 +1,17 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: echoserver
+  namespace: {{ .Chart.Name }}
+  {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
+spec:
+  hostnames:
+    - {{ include "helm_lib_module_public_domain" (list . "echoserver") }}
+  parentRefs:
+    - name: main
+      namespace: d8-gateway-api
+  rules:
+    - backendRefs:
+        - name: echoserver
+          port: 80

@@ -1,3 +1,9 @@
+.git/
+.github/
+.gitignore
+.gitlab-ci.yml
+.werf/
+base_images.yml.example
 crds
 docs
 enabled
