@@ -12,7 +12,7 @@ spec:
     kind: Deployment
     name: echoserver
   updatePolicy:
-    updateMode: "Auto"
+    updateMode: "InPlaceOrRecreate"
   resourcePolicy:
     containerPolicies:
       - containerName: "echoserver"

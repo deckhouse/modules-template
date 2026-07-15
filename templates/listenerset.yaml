@@ -1,0 +1,9 @@
+---
+apiVersion: deckhouse.io/v1
+kind: ListenerSet
+metadata:
+  name: main
+  namespace: d8-gateway-api
+  {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
+spec:
+  redirectToHTTPS: true

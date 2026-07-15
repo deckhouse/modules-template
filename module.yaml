@@ -3,7 +3,7 @@ stage: Experimental
 weight: 960
 # constraints to check module requirements
 requirements:
-    deckhouse: ">= 1.69"
+    deckhouse: ">= 1.71"
 subsystems:
   - chore
 namespace: echoserver
