@@ -8,13 +8,13 @@ import:
     to: /
     includePaths:
       - version.json
-      - images_digests.json
     after: install
 git:
   - add: /
     to: /
     includePaths:
-      - module.yaml
-      - docs/*.md
+      - changelog.yaml
       - crds
+      - docs/*.md
+      - module.yaml
       - openapi
