@@ -33,7 +33,11 @@ git:
   - hooks/batch # exclude sources
   includePaths:
   - .helmignore
-  - docs
+  - docs/*.md
+  - docs/images/*.png
+  - docs/images/*.jpeg
+  - docs/images/*.jpg
+  - docs/images/*.svg
   - charts
   - crds
   - enabled

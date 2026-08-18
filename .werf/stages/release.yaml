@@ -16,5 +16,9 @@ git:
       - changelog.yaml
       - crds
       - docs/*.md
+      - docs/images/*.png
+      - docs/images/*.jpeg
+      - docs/images/*.jpg
+      - docs/images/*.svg
       - module.yaml
       - openapi
