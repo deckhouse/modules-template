@@ -15,10 +15,8 @@ git:
     includePaths:
       - changelog.yaml
       - crds
-      - docs/*.md
-      - docs/images/*.png
-      - docs/images/*.jpeg
-      - docs/images/*.jpg
-      - docs/images/*.svg
+      - docs
       - module.yaml
       - openapi
+    excludePaths:
+      - docs/internal
