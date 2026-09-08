@@ -16,3 +16,6 @@ openapi
 release.yaml
 werf*.yaml
 NOTES.txt
+oss.yaml
+module.yaml
+dmt

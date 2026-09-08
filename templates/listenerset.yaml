@@ -1,9 +1,25 @@
+{{- if eq (include "helm_lib_module_gateway_enabled" .) "true" }}
 ---
-apiVersion: deckhouse.io/v1
+apiVersion: gateway.networking.k8s.io/v1
 kind: ListenerSet
 metadata:
   name: main
-  namespace: d8-gateway-api
+  namespace: {{ .Chart.Name }}
   {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
 spec:
-  redirectToHTTPS: true
+  listeners:
+  - allowedRoutes:
+      namespaces:
+        from: Same
+    hostname: {{ include "helm_lib_module_public_domain" (list . "echoserver") }}
+    name: echoserver
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: {{ include "helm_lib_module_https_secret_name" (list . "ingress-tls" "httproute-tls") }}
+        namespace: {{ .Chart.Name }}
+      mode: Terminate
+{{- end }}

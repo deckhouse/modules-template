@@ -1,3 +1,4 @@
+{{- if eq (include "helm_lib_module_gateway_enabled" .) "true" }}
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -10,8 +11,9 @@ spec:
     - {{ include "helm_lib_module_public_domain" (list . "echoserver") }}
   parentRefs:
     - name: main
-      namespace: d8-gateway-api
+      namespace: {{ .Chart.Name }}
   rules:
     - backendRefs:
         - name: echoserver
           port: 80
+{{- end }}
