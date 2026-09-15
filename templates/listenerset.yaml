@@ -22,4 +22,11 @@ spec:
         name: {{ include "helm_lib_module_https_secret_name" (list . "ingress-tls" "httproute-tls") }}
         namespace: {{ .Chart.Name }}
       mode: Terminate
+  - allowedRoutes:
+      namespaces:
+        from: Same
+    hostname: {{ include "helm_lib_module_public_domain" (list . "echoserver") }}
+    name: echoserver-redirect
+    port: 80
+    protocol: HTTP
 {{- end }}
